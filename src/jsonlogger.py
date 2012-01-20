@@ -24,7 +24,10 @@ class JsonFormatter(logging.Formatter):
             try:
                 log_record[formatter] = mappings[formatter](record)
             except KeyError:
-                log_record[formatter] = record.__dict__[formatter]
+                try:
+                    log_record[formatter] = record.__dict__[formatter]
+                except KeyError:
+                    return '<none>'
 
         return json.dumps(log_record)
 
