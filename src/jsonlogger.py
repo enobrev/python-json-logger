@@ -3,6 +3,8 @@ import json
 import re
 from datetime import datetime
 
+logger = logging.getLogger(__name__) # jsonlogger
+
 class JsonFormatter(logging.Formatter):
     """A custom formatter to format logging records as json objects"""
 
@@ -27,7 +29,7 @@ class JsonFormatter(logging.Formatter):
                 try:
                     log_record[formatter] = record.__dict__[formatter]
                 except KeyError:
-                    return '<none>'
+                    log_record[formatter] = '<none>'
 
         return json.dumps(log_record)
 
